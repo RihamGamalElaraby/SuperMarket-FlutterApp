@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:supermarket/cubit/cubit.dart';
 import 'package:supermarket/cubit/states.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:supermarket/network/local/cache_helper.dart';
 import 'package:supermarket/shared/reusable.dart';
+
 import 'login/loginScreen.dart';
 
 class boardingModel {
@@ -16,7 +17,7 @@ class boardingModel {
 }
 
 class OnBoardingScreen extends StatefulWidget {
-  OnBoardingScreen({super.key});
+  const OnBoardingScreen({super.key});
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
@@ -24,7 +25,6 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   var isLast = false;
-
   List<boardingModel> boarding = [
     boardingModel(
       image: 'assets/images/onboarding1.jpg',
@@ -42,8 +42,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       title: 'on board body',
     ),
   ];
-
   var boarderController = PageController();
+  void submit() {
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if (value) {
+        navigateandreplace(context, LoginScreen());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +59,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         return Scaffold(
             appBar: AppBar(actions: [
               TextButton(
-                  onPressed: () {
-                    navigateandreplace(context, LoginScreen());
-                  },
+                  onPressed: submit,
                   child: Text(
                     'Skip',
                     style: TextStyle(
@@ -68,7 +72,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 onPressed: () {
                   SuperMarketCubit.get(context).changeAppMode();
                 },
-                icon: Icon(Icons.brightness_2_rounded),
+                icon: const Icon(Icons.brightness_2_rounded),
                 color: SuperMarketCubit.get(context).isDark
                     ? Colors.white
                     : Colors.brown,
@@ -92,20 +96,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           });
                         }
                       },
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) =>
                           BuildBoardingItem(boarding[index]),
                       itemCount: boarding.length,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Row(
                     children: [
                       SmoothPageIndicator(
                           controller: boarderController,
-                          effect: ExpandingDotsEffect(
+                          effect: const ExpandingDotsEffect(
                               dotColor: Colors.grey,
                               dotHeight: 10,
                               expansionFactor: 4,
@@ -113,24 +117,24 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               spacing: 5,
                               activeDotColor: Colors.red),
                           count: boarding.length),
-                      Spacer(),
+                      const Spacer(),
                       FloatingActionButton(
                         onPressed: () {
                           if (isLast) {
-                            navigateandreplace(context, LoginScreen());
+                            submit();
                           } else {
                             boarderController.nextPage(
-                                duration: Duration(milliseconds: 750),
+                                duration: const Duration(milliseconds: 750),
                                 curve: Curves.ease);
                           }
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(60)),
-                        child: Icon(Icons.arrow_forward_ios_rounded),
+                        child: const Icon(Icons.arrow_forward_ios_rounded),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                 ],
@@ -145,20 +149,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         children: [
           Expanded(
               child: Image(
-            image: AssetImage('${model.image}'),
+            image: AssetImage(model.image),
           )),
           Text(
-            '${model.title}',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            model.title,
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
-            '${model.body}',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            model.body,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
         ],

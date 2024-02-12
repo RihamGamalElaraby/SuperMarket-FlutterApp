@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:supermarket/network/local/cache_helper.dart';
+import 'package:supermarket/screens/login/loginScreen.dart';
+
+String token = '';
 
 void navigateandreplace(context, Widget) => Navigator.pushAndRemoveUntil(
     context,
@@ -8,3 +12,11 @@ void navigatTo(context, Widget) => Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Widget),
     );
+
+void signout(context) {
+  CacheHelper.removetokenData(key: 'token').then((value) {
+    if (value) {
+      navigateandreplace(context, LoginScreen());
+    }
+  });
+}

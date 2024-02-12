@@ -4,11 +4,11 @@ import 'package:hexcolor/hexcolor.dart';
 
 ThemeData LightTheme = ThemeData(
   primarySwatch: Colors.brown,
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     bodyLarge: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.bold,
-      color: const Color.fromARGB(255, 83, 48, 35),
+      color: Color.fromARGB(255, 83, 48, 35),
     ),
     titleMedium: TextStyle(
       fontSize: 18,
@@ -17,7 +17,7 @@ ThemeData LightTheme = ThemeData(
     ),
   ),
   scaffoldBackgroundColor: Colors.white,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     backgroundColor: Colors.white,
     iconTheme: IconThemeData(
       color: Color.fromRGBO(137, 36, 3, 100),
@@ -32,13 +32,13 @@ ThemeData LightTheme = ThemeData(
       statusBarBrightness: Brightness.dark,
     ),
   ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedItemColor: Color.fromRGBO(137, 36, 3, 100),
     type: BottomNavigationBarType.fixed,
     elevation: 100,
   ),
   colorScheme: ColorScheme.fromSeed(
-    seedColor: Color.fromARGB(100, 137, 36, 31),
+    seedColor: const Color.fromARGB(100, 137, 36, 31),
   ),
   useMaterial3: true,
 );
@@ -46,7 +46,7 @@ ThemeData LightTheme = ThemeData(
 ThemeData DarkTheme = ThemeData(
   primarySwatch: Colors.brown,
   scaffoldBackgroundColor: HexColor('614435'),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     titleMedium: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w400,
@@ -60,10 +60,10 @@ ThemeData DarkTheme = ThemeData(
   ),
   appBarTheme: AppBarTheme(
     backgroundColor: HexColor('50301F'),
-    iconTheme: IconThemeData(
-      color: const Color.fromARGB(255, 211, 166, 150),
+    iconTheme: const IconThemeData(
+      color: Color.fromARGB(255, 211, 166, 150),
     ),
-    titleTextStyle: TextStyle(
+    titleTextStyle: const TextStyle(
       color: Color.fromARGB(255, 234, 231, 231),
       fontSize: 20,
       fontWeight: FontWeight.bold,
