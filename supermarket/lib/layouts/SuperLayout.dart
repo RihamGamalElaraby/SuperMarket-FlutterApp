@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supermarket/cubit/cubit.dart';
 import 'package:supermarket/cubit/states.dart';
-import 'package:supermarket/screens/searchScreen.dart';
+import 'package:supermarket/screens/search/searchScreen.dart';
 import 'package:supermarket/shared/reusable.dart';
 
 class SuperLayout extends StatelessWidget {

@@ -3,20 +3,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supermarket/models/loginModel.dart';
 import 'package:supermarket/network/dioHelper.dart';
 import 'package:supermarket/network/endpoins.dart';
-import 'package:supermarket/screens/login/cubit/loginStates.dart';
+import 'package:supermarket/screens/register/cubit/registerStates.dart';
 
-class LoginCubit extends Cubit<LoginStates> {
-  LoginCubit() : super(ShopLoginInitialStates());
-  static LoginCubit get(context) => BlocProvider.of(context);
+class RegisterCubit extends Cubit<RegisterStates> {
+  RegisterCubit() : super(ShopRegisterInitialStates());
+  static RegisterCubit get(context) => BlocProvider.of(context);
 
   LoginModel? loginModel;
-  void userLogin({required String email, required String Password}) async {
-    emit(ShopLoginLoadingStates());
+  void userRegister(
+      {required String email,
+      required String Password,
+      required String name,
+      required String phone}) async {
+    emit(ShopRegisterLoadingStates());
     try {
       final response = await DioHelper.postData(
-        url: LOGIN,
+        url: REGISTER,
         data: {
+          'name': name,
           'email': email,
+          'phone': phone,
           'password': Password,
         },
       );
@@ -25,14 +31,14 @@ class LoginCubit extends Cubit<LoginStates> {
       print(loginModel?.status);
       print(loginModel?.message);
       if (loginModel!.status!) {
-        emit(ShopLoginSucssesStates(loginModel));
+        emit(ShopRegisterSuccessStates(loginModel));
       } else {
-        emit(ShopLoginSErrorStates(
+        emit(ShopRegisterErrorStates(
             loginModel!.message ?? 'Unknown error occurred'));
       }
     } catch (error) {
       print(error.toString());
-      emit(ShopLoginSErrorStates(
+      emit(ShopRegisterErrorStates(
           'Failed to authenticate. Please try again later.'));
     }
   }
@@ -44,6 +50,6 @@ class LoginCubit extends Cubit<LoginStates> {
 
     suffix =
         isObsecure ? Icons.visibility_off_outlined : Icons.visibility_outlined;
-    emit(changePassworsVisibailitystate());
+    emit(ChangePasswordRegisterVisibilityState());
   }
 }

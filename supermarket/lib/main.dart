@@ -4,12 +4,15 @@ import 'package:supermarket/cubit/cubit.dart';
 import 'package:supermarket/cubit/states.dart';
 import 'package:supermarket/layouts/SuperLayout.dart';
 import 'package:supermarket/network/dioHelper.dart';
+import 'package:supermarket/screens/login/cubit/loginCubit.dart';
 import 'package:supermarket/screens/onboardingScreen.dart';
+import 'package:supermarket/screens/search/cubit/cubit.dart';
 import 'package:supermarket/styles/themes.dart';
 
 import 'cubit/blocObserver.dart';
 import 'network/local/cache_helper.dart';
 import 'screens/login/loginScreen.dart';
+import 'screens/register/cubit/registerCubit.dart';
 import 'shared/reusable.dart';
 
 void main() async {
@@ -20,7 +23,7 @@ void main() async {
   bool isDark = CacheHelper.getData(key: 'isDark') ?? true;
   Widget widget;
   bool onBoarding = CacheHelper.getData(key: 'onBoarding') ?? true;
-  token = CacheHelper.getData(key: 'token'); // Change to nullable type
+  token = CacheHelper.getData(key: 'token') ?? '';
 
   if (onBoarding) {
     if (token != null)
@@ -32,12 +35,22 @@ void main() async {
   }
 
   runApp(
-    BlocProvider(
-      create: (context) => SuperMarketCubit()..getHomeData(),
+    MultiBlocProvider(
       child: MyApp(
         isDark: isDark,
         startWidget: widget,
       ),
+      providers: [
+        BlocProvider(
+            create: (context) => SuperMarketCubit()
+              ..getHomeData()
+              ..getCategoryData()
+              ..getFavouriteData()
+              ..getProfileData()),
+        BlocProvider(create: ((context) => LoginCubit())),
+        BlocProvider(create: ((context) => RegisterCubit())),
+        BlocProvider(create: ((context) => SearchCubit())),
+      ],
     ),
   );
 }
@@ -59,6 +72,7 @@ class MyApp extends StatelessWidget {
           themeMode: BlocProvider.of<SuperMarketCubit>(context).isDark
               ? ThemeMode.dark
               : ThemeMode.light,
+          // home: OnBoardingScreen(),
           home: startWidget,
           // home: SuperLayout(),
         );
