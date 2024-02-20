@@ -8,7 +8,6 @@ import 'package:supermarket/screens/login/cubit/loginCubit.dart';
 import 'package:supermarket/screens/onboardingScreen.dart';
 import 'package:supermarket/screens/search/cubit/cubit.dart';
 import 'package:supermarket/styles/themes.dart';
-
 import 'cubit/blocObserver.dart';
 import 'network/local/cache_helper.dart';
 import 'screens/login/loginScreen.dart';
